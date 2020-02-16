@@ -56,12 +56,6 @@ build_from_source() {
         exit 1
     fi
 
-    if ! [ -x "$(command -v rustup)" ]; then
-        (>&2 echo 'Error: rustup is not installed.')
-        (>&2 echo 'Install Rust toolchain installer to resolve this problem.')
-        exit 1
-    fi
-
     pushd $__rust_sources_path
 
     cargo --version
