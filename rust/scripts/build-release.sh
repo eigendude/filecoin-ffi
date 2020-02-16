@@ -14,6 +14,12 @@ then
     exit 1
 fi
 
+if [[ -z "$CARGO_TOOLCHAIN" ]]
+then
+    (>&2 echo 'Error: script requires a toolchain system, e.g. arm-linux-gnueabi')
+    exit 1
+fi
+
 build_output_tmp=$(mktemp)
 
 # clean up temp file on exit
@@ -23,7 +29,8 @@ trap '{ rm -f $build_output_tmp; }' EXIT
 # build with RUSTFLAGS configured to output linker flags for native libs
 #
 RUSTFLAGS='--print native-static-libs' \
-    cargo +$2 build \
+    cargo build \
+    --target=${CARGO_TOOLCHAIN} \
     --release ${@:3} 2>&1 | tee ${build_output_tmp}
 
 # parse build output for linker flags

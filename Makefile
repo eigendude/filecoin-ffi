@@ -4,7 +4,7 @@ all: $(DEPS)
 .PHONY: all
 
 $(DEPS):
-	./install-filecoin
+	export CARGO_TOOLCHAIN=$(CARGO_TOOLCHAIN); ./install-filecoin
 
 clean:
 	rm -rf $(DEPS)
